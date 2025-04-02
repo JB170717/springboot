@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+
+<th:block th:replace="~{/include/layout03 :: 함수(~{ :: .box })}">
+    <div id="wrap1">
+        아이디선택자는 #입니다
+    </div>
+
+    <div class="box">
+        클래스 선택자
+    </div>
+
+    <script>
+        //여기서 작성하는 코드는 하나도 안나와요!!
+    </script>
+
+</th:block>
+
+<!--이 페이지에서 인식되어야 하는 코드같은 경우 block태그 밖에서 작성-->
+<script>
+    console.log(1);
+</script>
