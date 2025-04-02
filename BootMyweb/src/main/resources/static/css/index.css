@@ -521,7 +521,7 @@ a.sub_menu_select {color: #f1f1f1; background-color: #00acac;}
 /* 파일Btn */
 /* .filebox {padding: 10px 0; overflow: hidden;}
 .filebox .left {float: left;} */
-.filebox {padding: 10px 0; overflow-x:auto; white-space: nowrap;}
+.filebox {margin-left: 250px; ,padding: 10px 0; overflow-x:auto; white-space: nowrap;}
 .filebox .left {display: inline-block;}
 .filebox label {
     font-size: 12px;

@@ -22,7 +22,7 @@
 		<td>[[${memoVO.mno}]]</td>
 
 		<td th:if="${memoVO.secret == 'y'}">비밀글입니다</td>
-		<td th:unless="${memoVO.secret == 'y'}">[[${vo.memo}]]</td>
+		<td th:unless="${memoVO.secret == 'y'}">[[${memoVO .memo}]]</td>
 
 		<td>[[${memoVO.phone}]]</td>
 		<td>[[${memoVO.secret == 'y' ? '비공개' : '공개'}]]</td>
