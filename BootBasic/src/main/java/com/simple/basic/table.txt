@@ -15,3 +15,15 @@ grant all privileges on spring.* to spring;
 select * from
 (select 'hello') as a;
 # 함수는 찾아서 쓸것
+
+CREATE TABLE MEMO(
+	MNO INT PRIMARY KEY AUTO_INCREMENT,
+	MEMO VARCHAR(200) NOT NULL,
+	PHONE VARCHAR(30),
+	PW VARCHAR(4),
+	SECRET CHAR(1) CHECK(SECRET IN ('y', 'n'))
+);
+
+SELECT * FROM MEMO;
+
+INSE
