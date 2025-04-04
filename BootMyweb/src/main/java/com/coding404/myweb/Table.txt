@@ -1,3 +1,27 @@
+# 타입, 서브쿼리, 함수
+# 오라클에서 mysql로 변경되는 점 
+# varchar2(30) -> varchar(30)
+# number(10) -> int(10), decimal(10,3)
+# date -> date, timestamp
+# 시퀀스가 없고 (대신하는 auto_increment)
+# 조인구문은 다 같음 (inner, left, right, full, cross)
+# 서브쿼리절에는 반드시 테이블 엘리어스를 부착
+select * from
+(select 'hello') as a;
+# 함수는 찾아서 쓸것
+
+CREATE TABLE MEMO(
+	MNO INT PRIMARY KEY AUTO_INCREMENT,
+	MEMO VARCHAR(200) NOT NULL,
+	PHONE VARCHAR(30),
+	PW VARCHAR(4),
+	SECRET CHAR(1) CHECK(SECRET IN ('y', 'n'))
+);
+
+SELECT * FROM MEMO;
+
+INSERT INTO MEMO(MEMO,PHONE,PW,SECRET) VALUES ('테스트 글', '010-9300-7221', '1234', 'y');
+
 CREATE TABLE PRODUCT(
     PROD_ID INT PRIMARY KEY AUTO_INCREMENT, 	## PK (자동증가값)
     PROD_REGDATE TIMESTAMP DEFAULT NOW(), 	## 등록일 (기본값 시간형)/ 기본값은 오늘날짜
@@ -7,8 +31,32 @@ CREATE TABLE PRODUCT(
     PROD_NAME VARCHAR(300),  		## 상품명
     PROD_PRICE INT NOT NULL, 		## 가격
     PROD_COUNT INT NOT NULL, 		## 재고
-    PROD_DISCOUNT INT DEFAULT 0, 		## 할인율 (기본값 숫자 0)
+    PROD_DISCOUNT INT DEFAULT 0, 	## 할인율 (기본값 숫자 0)
     PROD_PURCHASE_YN CHAR(1) DEFAULT 'N' CHECK (PROD_PURCHASE_YN IN ('Y', 'N')), ##체크제약
     PROD_CONTENT VARCHAR(5000), 	##내용()
     PROD_COMMENT VARCHAR(5000)		##메모
 );
+
+SELECT * FROM PRODUCT;
+
+SELECT * 
+FROM PRODUCT 
+WHERE PROD_WRITER ='admin'
+ORDER BY PROD_ID DESC
+LIMIT 0,10;
+
+select * from PRODUCT
+where prod_writer='admin'
+and prod_name like '%demo%'
+and prod_content like '%demo%'
+and str_to_date(prod_enddate, '%Y-%m-%d') >= str_to_date('2025-06-30', '%Y-%m-%d')
+and str_to_date(prod_enddate, '%Y-%m-%d') <= str_to_date('2025-06-30', '%Y-%m-%d')
+order by 
+prod_price asc,
+prod_id desc
+limit 0, 10;
+
+
+
+
+
