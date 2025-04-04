@@ -11,7 +11,7 @@ public interface ProductService {
     //ArrayList<ProductVO> getList(String prodWriter);
     ArrayList<ProductVO> getList(String prodWriter, Criteria cri);
     //토탈구해오는 메서드
-    int getTotal(String prodWriter);
+    int getTotal(String prodWriter, Criteria cri);
 
 
     ProductVO getDetail(String prodId);
