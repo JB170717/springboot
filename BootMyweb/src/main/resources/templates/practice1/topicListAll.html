@@ -74,21 +74,11 @@
 												<th>내용</th>
 												<th>등록일</th>
 											</tr>
-												
-											<tr>
-												<td>1</td>
-												<td>admin</td>
-												<td>오늘은 해가뜨려나?</td>
-												<td>
-													<a title="상세보기(클릭)" href="#">오늘은 비가오려나?</a>
-												</td>
-												<td>2016-01-01</td>
-											</tr>
 
                                             <tr th:each="vo, status : ${list}">
 												<td>[[${status.count}]]</td>
 												<td>[[${vo.postWriter}]]</td>
-												<td>[[${vo.postContent}]]!</td>
+												<td>[[${vo.postContent}]]</td>
 												<td>
 													<a title="상세보기(클릭)" href="#">오늘은 해가뜬데요.</a>
 												</td>
