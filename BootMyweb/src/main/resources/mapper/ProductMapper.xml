@@ -5,8 +5,8 @@
 
 <mapper namespace="com.coding404.myweb.product.ProductMapper">
     <insert id="productRegist" parameterType="ProductVO">
-        insert into PRODUCT(prod_enddate, prod_writer, prod_name, prod_price, prod_count, prod_discount, prod_purchase_yn, prod_content, prod_comment )
-        values( #{prodEnddate} ,#{prodWriter} ,#{prodName} ,#{prodPrice} ,#{prodCount} ,#{prodDiscount} ,#{prodPurchaseYn} ,#{prodContent} ,#{prodComment} )
+        insert into PRODUCT(prod_enddate,prod_category ,prod_writer, prod_name, prod_price, prod_count, prod_discount, prod_purchase_yn, prod_content, prod_comment )
+        values( #{prodEnddate},#{prodCategory} ,#{prodWriter} ,#{prodName} ,#{prodPrice} ,#{prodCount} ,#{prodDiscount} ,#{prodPurchaseYn} ,#{prodContent} ,#{prodComment} )
     </insert>
 
     <!--
@@ -90,6 +90,21 @@
     <delete id="productDelete" parameterType="String">
         delete from PRODUCT where prod_id=#{prodId}
     </delete>
+
+
+    <!-- 카테고리 1단 셀렉트-->
+    <select id="getCategoryList" resultType="CategoryVO">
+        select * from PRODUCT_CATEGORY
+        where category_lv=1
+    </select>
+
+
+    <select id="getCategorySub" resultType="CategoryVO">
+        select * from PRODUCT_CATEGORY
+        where group_id = #{groupId}
+          and category_parent_lv= #{categoryLv}
+          and category_detail_parent_lv = #{categoryDetailLv}
+    </select>
 
 
 

@@ -16,6 +16,7 @@ import java.util.Map;
 
 @Slf4j
 @RestController //일반컨트롤러랑은 다른의미 - return에 담기는 데이터가 요청한 곳으로 응답하게 된다.
+//@CrossOrigin("......")//다 열어준다
 //@Controller + @ResponseBody = @RestController
 public class RestBasicController {
 
@@ -26,7 +27,7 @@ public class RestBasicController {
 
     }
 
-    //데이터를 보내는 방법
+    //데이터를 보   내는 방법
     //1. 객체반환
     //ResponseBody와 Json-databind라이브러리가 해줍니다(자동으로)
     @GetMapping("/bye")
@@ -170,19 +171,22 @@ public class RestBasicController {
     요청주소 - /api/v1/getData
     메서드 - get
     클라이언트에서 보내는 데이터 - num, name
-    서버에서 응답하는 데이터는 - SimpleVO
+    서버에서 응답하는 데이터는 - SimptleVO
     responceEntity로 응답
      */
 
+    //@CrossOrigin("http://127.0.0.1:5500") //서버가 다를시에... 해당 클라이언트 서버를 허용해준다
+    //@CrossOrigin({"첫번째주소","두번째주소"})
+    @CrossOrigin("*")
     @GetMapping("/api/v1/getData")
     public ResponseEntity<SimpleVO> getData(@RequestParam("num") int num,
                                             @RequestParam("name") String name){
 
         log.info(num+", "+name);
 
-        SimpleVO vo= new SimpleVO(2, "가짜데이터",LocalDateTime.now());
+        SimpleVO vo= new SimpleVO(2, name,LocalDateTime.now());
 
-        return new ResponseEntity<>(vo, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(vo, HttpStatus.OK);
     }
 
     /*
@@ -193,6 +197,7 @@ public class RestBasicController {
      responceEntity로 응답
      */
 
+    @CrossOrigin("*")
     @PostMapping("/api/v1/getInfo")
     public ResponseEntity<List<SimpleVO>> getInfo(@RequestBody Map<String,Object> map){
 
