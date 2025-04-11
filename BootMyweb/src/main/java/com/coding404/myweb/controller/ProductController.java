@@ -1,5 +1,6 @@
 package com.coding404.myweb.controller;
 
+import com.coding404.myweb.command.ProductUploadVO;
 import com.coding404.myweb.command.ProductVO;
 import com.coding404.myweb.product.ProductService;
 import com.coding404.myweb.util.Criteria;
@@ -13,9 +14,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Controller
@@ -68,19 +72,33 @@ public class ProductController {
 
         //prodId를 받아서 조회
         ProductVO vo = productService.getDetail(prodId);
-
+        List<ProductUploadVO> voImg = productService.getDetailImg(prodId);
         model.addAttribute("vo", vo);
+        model.addAttribute("voImg", voImg);
 
         return "product/productDetail";
     }
 
     //등록기능
     @PostMapping("/registForm")
-    public String registForm(ProductVO vo, RedirectAttributes ra) {
+    public String registForm(ProductVO vo,
+                             RedirectAttributes ra,
+                             @RequestParam("file") List<MultipartFile> list) {
 
-        log.info(vo.toString());
+        //1. 리스트안에 multipartfile의 값이 비었으면 제거
+        list = list.stream()
+                .filter( f -> f.isEmpty() == false )
+                .collect(Collectors.toList());
 
-        int result = productService.productRegist(vo);
+        //2. 이미지 타입인지 검사
+        for(MultipartFile file : list){
+            if(file.getContentType().contains("image") == false) { //이미지가 아니면...
+                ra.addFlashAttribute("msg","이미지만 업로드가 가능합니다.");
+                return "redirect:/product/productList";
+            }
+        }
+
+        int result = productService.productRegist(vo, list); //vo객체와 피일리스트.
         //1이면 성공, 0이면 실패 1회성으로 메세지를 줘보자.
 
         if(result == 1) {

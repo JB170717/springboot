@@ -1,6 +1,7 @@
 package com.coding404.myweb.product;
 
 import com.coding404.myweb.command.CategoryVO;
+import com.coding404.myweb.command.ProductUploadVO;
 import com.coding404.myweb.command.ProductVO;
 import com.coding404.myweb.util.Criteria;
 import org.apache.ibatis.annotations.Mapper;
@@ -27,6 +28,10 @@ public interface ProductMapper {
     List<CategoryVO> getCategoryList(); //1단 select
     List<CategoryVO> getCategorySub(CategoryVO vo);
 
+    //업로드 인서트
+    int productRegistFile(ProductUploadVO vo);
 
+    //파일정보 조회
+    List<ProductUploadVO> getDetailImg(String prodId);
 
 }
