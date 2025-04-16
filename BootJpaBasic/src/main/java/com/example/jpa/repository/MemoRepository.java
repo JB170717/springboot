@@ -72,6 +72,9 @@ public interface MemoRepository extends JpaRepository<Memo, Long>
             ,nativeQuery = true)
     Memo getNative(Long a);
 
+//    //JPQL로 조인
+//    @Query("select m from Memo m inner join m.member x where m.mno >= :mno")
+//    List<Memo> mtoJoin2(@Param("mno") long mno);
 
 
 

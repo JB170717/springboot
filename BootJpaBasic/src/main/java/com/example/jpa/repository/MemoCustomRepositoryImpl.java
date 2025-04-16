@@ -1,5 +1,7 @@
 package com.example.jpa.repository;
 
+import com.example.jpa.entity.Member;
+import com.example.jpa.entity.MemberMemoDTO;
 import com.example.jpa.entity.Memo;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,5 +53,54 @@ public class MemoCustomRepositoryImpl implements MemoCustomRepository {
         List<Memo> result = query.getResultList(); // select구문은 이렇게 실행함
 
         return result;
+    }
+
+    @Override
+    public List<Memo> mtoJoin3(String name) {
+        //값을 맵핑 시킬때는 Memo로 받을 수 있고, Object[]로 받을 수 있음
+        String sql = "select m from Memo m inner join Member x on m.writer = x.name where x.name= :name";
+
+        TypedQuery<Memo> query = entityManager.createQuery(sql, Memo.class);
+        query.setParameter("name", name);
+
+        return query.getResultList(); //여러 행
+    }
+
+    @Override
+    public Member otmJoin1(String id) {
+
+        String sql = "select m from Member m inner join m.list x where m.id = :id ";
+
+        TypedQuery<Member> query = entityManager.createQuery(sql, Member.class);
+        query.setParameter("id", id);
+
+        Member m = query.getSingleResult(); //1행으로 쿼리함
+
+        return m;
+    }
+
+    //dto로 받기
+    @Override
+    public List<MemberMemoDTO> getList(String id) {
+
+        String sql = "select new com.example.jpa.entity.MemberMemoDTO(x.id, x.name, x.signDate, m.mno, m.writer, m.text)"+
+                "from Memo m inner join m.member x where x.id= :id";
+        TypedQuery<MemberMemoDTO> query = entityManager.createQuery(sql, MemberMemoDTO.class);
+        query.setParameter("id", id);
+
+        return query.getResultList();
+    }
+
+    //실습
+
+    @Override
+    public List<MemberMemoDTO> getList2(String search) {
+        String sql = "select new com.example.jpa.entity.MemberMemoDTO(m.id, m.name, m.signDate, x.mno, x.writer, x.text) from Member m " +
+                "left join m.list x where x.text like :search";
+
+        TypedQuery<MemberMemoDTO> query = entityManager.createQuery(sql, MemberMemoDTO.class);
+        query.setParameter("search", "%"+search+"%");
+
+        return query.getResultList();
     }
 }
