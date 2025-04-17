@@ -39,7 +39,7 @@ public class JPAPage02 {
 
         Page<Memo> page = memoRepository.findAll(pageable);
 
-        for(Memo m : page.getContent()){ // getContent -> 조회된데이터를 얻을수 있음
+        for(Memo m : page.getContent()){ // getContent -> 조회된 데이터를 얻을수 있음
             System.out.println(m.toString());
         }
 
